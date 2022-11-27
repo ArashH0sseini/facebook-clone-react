@@ -61,7 +61,7 @@ function Header() {
                 layout="fixed"
                 alt=""
               />
-              <p className='whitespace-nowrap font-semibold pr-3'>Arash Hossseini</p>
+              <p className='whitespace-nowrap font-semibold pr-3'>{session.user.name}</p>
             </>
           ) : (
             <Link href="/api/auth/signin">

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Header from '../components/Header'
 import { getSession } from "next-auth/react"
 import Login from '../pages/auth/signin'
+import Sidebar from '../components/Sidebar'
 
 export default function Home({session}) {
   return (
@@ -13,7 +14,7 @@ export default function Home({session}) {
       <Header />
 
       <main>
-        
+        <Sidebar />
       </main>
     </div>
   )
