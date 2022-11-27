@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
 import Image from 'next/image'
 import {
@@ -15,8 +16,12 @@ import {
   ShoppingCartIcon
 } from '@heroicons/react/outline'
 import HeaderIcon from './HeaderIcon'
+import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 function Header() {
+  const { data: session, status } = useSession()
+
   return (
     <div className='sticky top-0 z-50 bg-white flex items-center lg:px-5 shadow-md'>
       <div className='flex items-center'>
@@ -44,7 +49,26 @@ function Header() {
 
       <div className='flex items-center sm:space-x-2 justify-end'>
         {/* Profile Pic */}
-        <p className='whitespace-nowrap font-semibold pr-3'>Arash Hossseini</p>
+        {
+          session ? (
+            <>
+              <Image
+                onClick={signOut}
+                className="rounded-full cursor-pointer"
+                src={session.user.image}
+                width="40"
+                height="40"
+                layout="fixed"
+                alt=""
+              />
+              <p className='whitespace-nowrap font-semibold pr-3'>Arash Hossseini</p>
+            </>
+          ) : (
+            <Link href="/api/auth/signin">
+              <p className='whitespace-nowrap font-semibold pr-3 cursor-pointer'>Sign in</p>
+            </Link>
+          )
+        }
         <ViewGridIcon className='icon' />
         <ChatIcon className='icon' />
         <BellIcon className='icon' />

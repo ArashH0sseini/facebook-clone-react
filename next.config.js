@@ -6,7 +6,8 @@ const nextConfig = {
     domains: [
       "links.papareact.com",
       "platform-lookside.fbsbx.com",
-      "firebasestorage.googleapis.com"
+      "firebasestorage.googleapis.com",
+      "lh3.googleusercontent.com"
     ]
   }
 }

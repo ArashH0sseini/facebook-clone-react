@@ -1,13 +1,15 @@
+import { SessionProvider } from 'next-auth/react'
 import '../styles/globals.css'
-import Auth0Provider from "next-auth/providers/auth0"
 
-function MyApp({ Component, pageProps }) {
+
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
-
-    // <Auth0Provider session={pageProps.session}>
-      
-      <Component {...pageProps} />
-    // </Auth0Provider>
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
   )
 }
 
