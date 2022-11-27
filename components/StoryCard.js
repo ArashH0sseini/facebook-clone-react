@@ -20,7 +20,7 @@ function StoryCard({name,src,profile}) {
         alt=""
          />
          <p className='absolute opacity-0 lg:opacity-100
-         bottom-4 w-5/6 text-white text-sm font-'></p>
+         bottom-4 w-5/6 text-white text-sm '>{name}</p>
     </div>
   )
 }
