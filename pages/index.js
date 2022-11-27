@@ -6,14 +6,14 @@ import Sidebar from '../components/Sidebar'
 
 export default function Home({session}) {
   return (
-    <div>
+    <div className='h-screen bg-gray-100 overflow-hidden'>
       <Head>
         <title>Facebook</title>
       </Head>
 
       <Header />
 
-      <main>
+      <main className='flex'>
         <Sidebar />
       </main>
     </div>
