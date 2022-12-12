@@ -7,7 +7,7 @@ import Feed from '../components/Feed'
 
 export default function Home({session}) {
   return (
-    <div className='h-screen bg-gray-100 overflow-hidden'>
+    <div className='h-screen bg-gray-200 overflow-hidden'>
       <Head>
         <title>Facebook</title>
       </Head>
