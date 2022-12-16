@@ -6,7 +6,7 @@ import { DeviceMobileIcon, EmojiHappyIcon } from '@heroicons/react/outline'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css'
 import { db, storage, storageRef } from '../firebase'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, doc, serverTimestamp } from 'firebase/firestore'
 import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage'
 
 
@@ -38,12 +38,14 @@ function Modal({ showModal, setShowModal }) {
     const imagesListRef = ref(storage, "posts/");
     const uploadFile = () => {
         if (imageUpload == null) return;
-        const imageRef = ref(storage, `posts/${imageUpload.name}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        const imageRef = ref(storage, `posts/${doc.id}`);
+        uploadBytes(imageRef,imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
                 setImageUrls((prev) => [...prev, url]);
             });
         });
+
+        console.log(imageUrls[0])
         addDoc(collection(db, 'posts'), {
             message: inputRef.current.value,
             name: session.user.name,
@@ -51,10 +53,8 @@ function Modal({ showModal, setShowModal }) {
             image: session.user.image,
             postImage:imageUrls[0],
             timestamp: serverTimestamp()
-
         })
         inputRef.current.value = "";
-        console.log(imageUrls)
         setImageUrls([])
         setShowModal(false)
         setImageToPost([])
