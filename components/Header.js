@@ -18,6 +18,7 @@ import {
 import HeaderIcon from './HeaderIcon'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+import Logo from '../public/logo.svg'
 
 function Header() {
   const { data: session, status } = useSession()
@@ -25,7 +26,7 @@ function Header() {
   return (
     <div className='sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md'>
       <div className='flex items-center'>
-        <Image src='https://links.papareact.com/5me'
+        <Image src={Logo}
           width={40}
           height={40}
           layout="fixed"

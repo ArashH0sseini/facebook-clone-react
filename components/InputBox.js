@@ -1,69 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { EmojiHappyIcon } from '@heroicons/react/outline'
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid'
-import { db, storage,storageRef } from '../firebase'
+import { db, storage, storageRef } from '../firebase'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage'
+import AddImageModal from './AddImageModal'
 
 
 function InputBox() {
-    console.log(storage)
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const inputRef = useRef(null)
     const filepickerRef = useRef(null)
     const [imageToPost, setImageToPost] = useState(null);
-
-    const sendPost = (e) => {
-        e.preventDefault();
-
-        if (!inputRef.current.value) return;
-
-        addDoc(collection(db, 'posts'), {
-            message: inputRef.current.value,
-            name: session.user.name,
-            email: session.user.email,
-            image: session.user.image,
-            timestamp: serverTimestamp()
-        }).then((doc) => {
-            if (imageToPost) {
-                const uploadTask = storage.ref("posts").child(doc.id).putString(imageToPost, "data_url");
-
-                removeImage();
-
-                uploadTask.on(
-                    'state_change',
-                    null,
-                    (error) => console.log(error),
-                    () => {
-                        // when the upload complete
-                        storage.ref("posts").child(doc.id).getDownloadURL().then(url => {
-                            db.collection('posts').doc(doc.id).set({
-                                postImage: url
-                            }, { merge: true })
-                        })
-                    })
-            }
-        })
-
-        inputRef.current.value = "";
-    };
-
-    const addImageToPost = (e) => {
-        const reader = new FileReader();
-        if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0])
-        }
-
-        reader.onload = (readerEvent) => {
-            setImageToPost(readerEvent.target.result)
-        };
-    };
-
-    const removeImage = () => {
-        setImageToPost(null);
-    }
+    const [imageUrls, setImageUrls] = useState([]);
+    const [imageUpload, setImageUpload] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <div className='bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6'>
@@ -75,13 +29,12 @@ function InputBox() {
                     height={40}
                     layout="fixed" />
                 <form className='flex flex-1'>
-                    <input className='rounded-full h-12 bg-gray-200 
-                    flex-grow px-5 focus:outline-none'
+                    <input className='rounded-full h-12 hover:bg-gray-200 
+                    flex-grow px-5 focus:outline-none cursor-pointer'
+                    onClick={() => setShowModal(true)}
                         type="text"
-                        ref={inputRef}
                         placeholder={`What's on your mind, ${session.user.name}`}
                     />
-                    <button hidden type='submit' onClick={sendPost}>Submit</button>
                 </form>
 
                 {imageToPost && (
@@ -99,14 +52,9 @@ function InputBox() {
                     <p className='text-xs sm:text-sm xl:text-base'>Live Video</p>
                 </div>
 
-                <div onClick={() => filepickerRef.current.click()} className='inputIcon'>
-                    <CameraIcon className='h-7 text-green-400 ' />
+                <div type="button" onClick={() => setShowModal(true)} className='inputIcon'>
+                    <CameraIcon className='h-7 text-green-400' />
                     <p className='text-xs sm:text-sm xl:text-base'>Photo/Video</p>
-                    <input
-                        ref={filepickerRef}
-                        onChange={addImageToPost}
-                        type="file"
-                        hidden />
                 </div>
 
                 <div className='inputIcon'>
@@ -114,6 +62,14 @@ function InputBox() {
                     <p className='text-xs sm:text-sm xl:text-base'>Feeling/Activity</p>
                 </div>
             </div>
+
+            <div>
+            {imageUrls.map((url,index) => {
+                    return <img src={url} key={index} alt="" />;
+                })}
+            </div>
+
+           <AddImageModal showModal={showModal} setShowModal={setShowModal} />
         </div>
     )
 }

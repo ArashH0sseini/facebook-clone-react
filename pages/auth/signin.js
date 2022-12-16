@@ -4,7 +4,6 @@ import { getProviders, signIn as SignIntoProvider } from 'next-auth/react'
 
 
 function signIn({ providers }) {
-    console.log(providers)
     return (
         <div className='grid place-items-center'>
             <Image
