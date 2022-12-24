@@ -109,7 +109,7 @@ function Modal({ showModal, setShowModal }) {
                                         <img src={session?.user.image} className="w-11 rounded-full" alt='' />
                                     </div>
                                     <div className='flex flex-col'>
-                                        <span className='font-bold text-[#333]'>{session.user.name}</span>
+                                        <span className='font-bold text-[#333]'>{session?.user.name}</span>
                                         <div className='flex items-center gap-2 bg-gray-200 px-2 py-1 rounded-lg w-28 cursor-pointer' id="app-title">
                                             <UserGroupIcon className='w-5 text-black' />
                                             <span className='text-black text-sm font-semibold'>Friends</span>
@@ -125,7 +125,7 @@ function Modal({ showModal, setShowModal }) {
                                                 (<input className='rounded-full h-12 flex-grow px-7 focus:outline-none placeholder:text-gray-700 text-black placeholder:font-normal text-base'
                                                     type="text"
                                                     ref={inputRef}
-                                                    placeholder={`What's on your mind, ${session.user.name}?`}
+                                                    placeholder={`What's on your mind, ${session?.user.name}?`}
                                                 />) :
                                                 (
                                                     <textarea rows="5" className="px-6 flex-grow focus:outline-none placeholder:text-gray-700 text-black placeholder:font-normal text-xl flex-1"
