@@ -22,7 +22,7 @@ function InputBox() {
     return (
         <div className='bg-white p-2 rounded-2xl shadow-md text-gray-500 font-medium mt-6'>
             <div className='flex space-x-4 p-4 item-center'>
-                <Image src={session.user.image}
+                <Image src={session?.user.image}
                     alt=""
                     className='rounded-full'
                     width={40}
@@ -33,7 +33,7 @@ function InputBox() {
                     flex-grow px-5 focus:outline-none cursor-pointer'
                     onClick={() => setShowModal(true)}
                         type="text"
-                        placeholder={`What's on your mind, ${session.user.name}`}
+                        placeholder={`What's on your mind, ${session?.user.name}`}
                     />
                 </form>
 

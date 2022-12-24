@@ -2,6 +2,9 @@
 import Image from 'next/image'
 import React from 'react'
 import { ChatAltIcon, ShareIcon, ThumbUpIcon } from '@heroicons/react/outline'
+import { FieldValue, serverTimestamp, Timestamp } from 'firebase/firestore'
+
+
 
 function Post({ name, message, email, postImage, image, timestamp }) {
   return (
@@ -12,7 +15,7 @@ function Post({ name, message, email, postImage, image, timestamp }) {
           <div>
             <p className='font-medium'>{name}</p>
             <p className='text-xs text-gray-400'>
-              {/* {new Date(timestamp?.toDate().toLocaleString())} */}
+              {timestamp.toDate().toLocaleString()}
             </p>
           </div>
         </div>
