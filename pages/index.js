@@ -12,8 +12,8 @@ export default function Home({ session }) {
     <div className='h-screen bg-gray-200 overflow-hidden'>
       <Head>
         <title>Facebook</title>
+        <link rel="icon" href="/logo.ico" />
       </Head>
-
       <Header />
 
       <main className='flex'>
