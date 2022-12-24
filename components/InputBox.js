@@ -50,7 +50,7 @@ function InputBox() {
                     </div>
                 ) : (
                     <div className='flex space-x-4 p-4 item-center'>
-                        <UserCircleIcon width={50} height={50} />
+                        <UserCircleIcon width={50} height={50} className="text-gray-400" />
                         <Link href='/api/auth/signin'>
                             <form className='flex flex-1'>
                                 <input className='rounded-full h-12 hover:bg-gray-200 

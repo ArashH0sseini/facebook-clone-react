@@ -10,6 +10,9 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
+
+  secret: 'IamVeryHandsome',
+
   pages: {
     signIn: "/auth/signin",
   }
